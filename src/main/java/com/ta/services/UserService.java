@@ -23,5 +23,5 @@ public interface UserService {
 	
 	public void deleteUser(User user);
 	
-	public List<User> getByLimit(boolean nu);
+	public List<User> getByLimit(boolean limit);
 }
