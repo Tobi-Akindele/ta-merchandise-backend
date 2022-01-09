@@ -70,6 +70,10 @@ public class UserDetailsImpl implements UserDetails {
 		return admin;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
