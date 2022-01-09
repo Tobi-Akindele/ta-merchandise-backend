@@ -1,5 +1,7 @@
 package com.ta.services;
 
+import java.util.List;
+
 import com.ta.dtos.JwtResponse;
 import com.ta.dtos.LoginRequest;
 import com.ta.dtos.UserDto;
@@ -18,4 +20,8 @@ public interface UserService {
 	public User updateUser(User user, UserDto userDto) throws NoSuchFieldException, SecurityException;
 
 	public User getById(String userId);
+	
+	public void deleteUser(User user);
+	
+	public List<User> getByLimit(boolean nu);
 }

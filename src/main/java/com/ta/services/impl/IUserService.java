@@ -10,6 +10,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,16 +40,16 @@ import com.ta.utils.ConstantUtils;
 
 @Service
 public class IUserService implements UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
 
@@ -63,11 +67,11 @@ public class IUserService implements UserService {
 	public User createUser(User user) {
 		user.setCreatedAt(new Date());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
+
 		Set<String> roles = new HashSet<>();
 		roles.add(Roles.ROLE_USER.name());
 		user.setRoles(roles);
-		
+
 		return userRepository.save(user);
 	}
 
@@ -84,7 +88,8 @@ public class IUserService implements UserService {
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
+		return new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(),
+				userDetails.isAdmin(), roles);
 	}
 
 	@Override
@@ -100,4 +105,14 @@ public class IUserService implements UserService {
 		return userRepository.findById(userId).orElse(null);
 	}
 
+	@Override
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+	}
+
+	@Override
+	public List<User> getByLimit(boolean limit) {
+		final Pageable pageRequest = PageRequest.of(0, 5, Sort.by(Direction.DESC, "createdAt"));
+		return limit ? userRepository.findAll(pageRequest).getContent() : userRepository.findAll();
+	}
 }
