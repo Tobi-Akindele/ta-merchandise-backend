@@ -66,6 +66,7 @@ public class IUserService implements UserService {
 	@Override
 	public User createUser(User user) {
 		user.setCreatedAt(new Date());
+		user.setUpdatedAt(new Date());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		Set<String> roles = new HashSet<>();

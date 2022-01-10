@@ -1,12 +1,16 @@
 package com.ta.models;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 @Document(collection = "Products")
 public class Product {
@@ -29,8 +33,9 @@ public class Product {
 	
 	private String color;
 	
-	@NotBlank
-	private String price;
+	@NotNull
+	@Field(targetType = FieldType.DECIMAL128)
+	private BigDecimal price;
 	
 	private Date createdAt;
 	
@@ -92,11 +97,11 @@ public class Product {
 		this.color = color;
 	}
 
-	public String getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
