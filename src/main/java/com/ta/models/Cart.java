@@ -1,11 +1,12 @@
 package com.ta.models;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Carts")
@@ -14,11 +15,11 @@ public class Cart {
 	@Id
 	private String id;
 	
-	@DBRef
-	private User user;
+	@NotBlank
+	private String userId;
 	
-	@DBRef
-	private Set<Product> products = new HashSet<>();
+	@NotEmpty
+	private Set<CartProducts> cartProducts;
 	
 	private Date createdAt;
 	
@@ -32,20 +33,20 @@ public class Cart {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
+	public Set<CartProducts> getCartProducts() {
+		return cartProducts;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setCartProducts(Set<CartProducts> cartProducts) {
+		this.cartProducts = cartProducts;
 	}
 
 	public Date getCreatedAt() {

@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Orders")
@@ -17,11 +17,11 @@ public class Order {
 	@Id
 	private String id;
 	
-	@DBRef
-	private User user;
+	@NotBlank
+	private String userId;
 	
-	@DBRef
-	private Set<Product> products = new HashSet<>();
+	@NotEmpty
+	private Set<CartProducts> products = new HashSet<>();
 	
 	@NotBlank
 	private BigInteger amount;
@@ -42,19 +42,19 @@ public class Order {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public Set<Product> getProducts() {
+	public Set<CartProducts> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product> products) {
+	public void setProducts(Set<CartProducts> products) {
 		this.products = products;
 	}
 
