@@ -41,7 +41,7 @@ public class ProductController {
 			throw new BadRequestException("400", "Requestbody is required");
 		
 		product = productService.createProduct(product);
-		return ResponseEntity.ok(new Response("Product created successfully", product));
+		return ResponseEntity.ok(product);
 	}
 	
 	@PutMapping("/product/{productId}")
@@ -57,7 +57,7 @@ public class ProductController {
 			throw new NotFoundException("404", "Product not found");
 		
 		product = productService.updateProduct(productInDb, product);
-		return ResponseEntity.ok(new Response("Product updated successfully", product));
+		return ResponseEntity.ok(product);
 	}
 	
 	@DeleteMapping("/product/{productId}")
@@ -86,7 +86,7 @@ public class ProductController {
 		if(product == null)
 			throw new NotFoundException("400", "Resource not found");
 		
-		return ResponseEntity.ok(new Response("Product retrieved successfully", product));
+		return ResponseEntity.ok(product);
 	}
 	
 	@GetMapping("/products")
@@ -95,6 +95,6 @@ public class ProductController {
 		
 		List<Product> products = productService.getByParams(limit, category);
 		
-		return ResponseEntity.ok(new Response("Users retrieved successfully", products));
+		return ResponseEntity.ok(products);
 	}
 }

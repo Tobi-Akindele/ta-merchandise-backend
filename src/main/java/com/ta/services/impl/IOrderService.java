@@ -1,5 +1,7 @@
 package com.ta.services.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -7,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ta.dao.OrderRepository;
+import com.ta.dtos.Stats;
 import com.ta.models.Order;
 import com.ta.services.OrderService;
+import com.ta.services.UserService;
 import com.ta.utils.BeanUtils;
 import com.ta.utils.ConstantUtils;
 
@@ -17,6 +21,9 @@ public class IOrderService implements OrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+    @Autowired
+    private UserService userService;
 
 	@Override
 	public Order createOrder(Order order) {
@@ -52,7 +59,18 @@ public class IOrderService implements OrderService {
 
 	@Override
 	public List<Order> getAllOrders() {
-		return orderRepository.findAll();
+		List<Order> orders = orderRepository.findAll();
+		orders.forEach(order -> {
+			order.setUser(userService.getById(order.getUserId()));
+		});
+		return orders;
+	}
+
+	@Override
+	public List<Stats> getOrderStats() {
+		LocalDateTime ldt = LocalDateTime.now().minusMonths(2);
+		Date previousMonth = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+		return orderRepository.getOrderStats(previousMonth);
 	}
 
 }

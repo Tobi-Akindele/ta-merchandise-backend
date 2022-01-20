@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dtos.Response;
+import com.ta.dtos.Stats;
 import com.ta.exceptions.BadRequestException;
 import com.ta.exceptions.NotFoundException;
 import com.ta.models.Order;
@@ -45,7 +46,7 @@ public class OrderController {
 			throw new BadRequestException("400", "Requestbody is required");
 		
 		order = orderService.createOrder(order);
-		return ResponseEntity.ok(new Response("Order created successfully", order));
+		return ResponseEntity.ok(order);
 	}
 	
 	@PutMapping("/order/{orderId}")
@@ -61,7 +62,7 @@ public class OrderController {
 			throw new NotFoundException("404", "Order not found");
 		
 		order = orderService.updateOrder(orderInDb, order);
-		return ResponseEntity.ok(new Response("Order updated successfully", order));
+		return ResponseEntity.ok(order);
 	}
 	
 	@DeleteMapping("/order/{orderId}")
@@ -93,7 +94,7 @@ public class OrderController {
 		
 		List<Order> orders = orderService.getByUserId(userId);
 		
-		return ResponseEntity.ok(new Response("User's orders retrieved successfully", orders));
+		return ResponseEntity.ok(orders);
 	}
 	
 	@GetMapping("/orders")
@@ -102,6 +103,15 @@ public class OrderController {
 		
 		List<Order> orders = orderService.getAllOrders();
 		
-		return ResponseEntity.ok(new Response("Orders retrieved successfully", orders));
+		return ResponseEntity.ok(orders);
+	}
+	
+	@GetMapping("/orders/income")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getOrderStats() {
+		
+		List<Stats> stats = orderService.getOrderStats();
+		
+		return ResponseEntity.ok(stats);
 	}
 }

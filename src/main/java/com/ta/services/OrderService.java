@@ -2,6 +2,7 @@ package com.ta.services;
 
 import java.util.List;
 
+import com.ta.dtos.Stats;
 import com.ta.models.Order;
 
 public interface OrderService {
@@ -17,4 +18,6 @@ public interface OrderService {
 	public List<Order> getByUserId(String userId);
 
 	public List<Order> getAllOrders();
+
+	public List<Stats> getOrderStats();
 }

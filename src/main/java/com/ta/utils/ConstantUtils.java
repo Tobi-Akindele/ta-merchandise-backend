@@ -7,7 +7,7 @@ public class ConstantUtils {
 	public static final String[] UPDATABLE_USER_FIELDS = { "firstName", "lastName" };
 
 	public static final String[] UPDATABLE_PRODUCT_FIELDS = { "title", "description", "image", "categories", "size",
-			"color", "price" };
+			"color", "price", "inStock" };
 	
 	public static final String[] UPDATABLE_CART_FIELDS = { "cartProducts" };
 	

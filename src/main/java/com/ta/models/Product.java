@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -18,22 +15,20 @@ public class Product {
 	@Id
 	private String id;
 	
-	@NotBlank
 	private String title;
 	
-	@NotBlank
 	private String description;
 	
-	@NotBlank
 	private String image;
 	
 	private List<String> categories;
 	
-	private String size;
+	private List<String> size;
 	
-	private String color;
+	private List<String> color;
 	
-	@NotNull
+	private boolean inStock;
+	
 	@Field(targetType = FieldType.DECIMAL128)
 	private BigDecimal price;
 	
@@ -81,20 +76,28 @@ public class Product {
 		this.categories = categories;
 	}
 
-	public String getSize() {
+	public List<String> getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(List<String> size) {
 		this.size = size;
 	}
 
-	public String getColor() {
+	public List<String> getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(List<String> color) {
 		this.color = color;
+	}
+
+	public boolean isInStock() {
+		return inStock;
+	}
+
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
 	}
 
 	public BigDecimal getPrice() {

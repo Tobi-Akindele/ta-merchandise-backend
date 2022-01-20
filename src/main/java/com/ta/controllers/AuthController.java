@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dtos.JwtResponse;
 import com.ta.dtos.LoginRequest;
-import com.ta.dtos.Response;
 import com.ta.exceptions.BadRequestException;
 import com.ta.exceptions.DuplicateException;
 import com.ta.models.User;
@@ -58,6 +57,6 @@ public class AuthController {
 		}
 		
 		user = userService.createUser(user);
-		return ResponseEntity.ok(new Response("User registered successfully", user));
+		return ResponseEntity.ok(user);
 	}
 }

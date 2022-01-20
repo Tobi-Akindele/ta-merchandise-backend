@@ -3,6 +3,8 @@
  */
 package com.ta.services.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,7 @@ import com.ta.dao.UserRepository;
 import com.ta.dtos.JwtResponse;
 import com.ta.dtos.LoginRequest;
 import com.ta.dtos.UserDto;
+import com.ta.dtos.Stats;
 import com.ta.enums.Roles;
 import com.ta.models.User;
 import com.ta.security.jwt.JwtUtils;
@@ -70,7 +73,7 @@ public class IUserService implements UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		Set<String> roles = new HashSet<>();
-		roles.add(Roles.ROLE_USER.name());
+		roles.add(user.isAdmin() ? Roles.ROLE_ADMIN.name() : Roles.ROLE_USER.name());
 		user.setRoles(roles);
 
 		return userRepository.save(user);
@@ -115,5 +118,12 @@ public class IUserService implements UserService {
 	public List<User> getByLimit(boolean limit) {
 		final Pageable pageRequest = PageRequest.of(0, 5, Sort.by(Direction.DESC, "createdAt"));
 		return limit ? userRepository.findAll(pageRequest).getContent() : userRepository.findAll();
+	}
+
+	@Override
+	public List<Stats> getUserStats() {
+		LocalDateTime ldt = LocalDateTime.now().minusYears(1);
+		Date lastYear = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+		return userRepository.getUserStats(lastYear);
 	}
 }

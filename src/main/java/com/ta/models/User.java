@@ -46,6 +46,8 @@ public class User {
 	
 	private Set<String> roles = new HashSet<>();
 	
+	private String image;
+	
 	@Transient
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String confirmPassword;
@@ -128,6 +130,14 @@ public class User {
 
 	public void setRoles(Set<String> roles) {
 		this.roles = roles;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getConfirmPassword() {
