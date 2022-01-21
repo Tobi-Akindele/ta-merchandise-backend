@@ -5,6 +5,14 @@ public class CartProducts {
 	private String productId;
 	private Long quantity;
 	
+	public CartProducts() {
+	}
+	
+	public CartProducts(String productId, Long quantity) {
+		this.productId = productId;
+		this.quantity = quantity;
+	}
+
 	public String getProductId() {
 		return productId;
 	}

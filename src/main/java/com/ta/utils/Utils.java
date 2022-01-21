@@ -61,4 +61,8 @@ public class Utils {
     	isAdmin = userDetails != null ? userDetails.getUser().isAdmin() : false;
     	return isAdmin;
     }
+	
+	public static int wordsCount(String str) {
+		return str.trim().split("\\s*,\\s*").length;
+	}
 }

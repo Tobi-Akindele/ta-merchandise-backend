@@ -31,8 +31,8 @@ public class ContactController {
 				|| Utils.isEmptyString(contact.getMessage()))
 			throw new BadRequestException("400", "Incomplete request data");
 		
-		if(contact.getMessage().length() > 200)
-			throw new BadRequestException("400", "Only 200 character allowed");
+		if(Utils.wordsCount(contact.getMessage()) > 200)
+			throw new BadRequestException("400", "Only 200 words allowed");
 
 		contact = contactService.createContact(contact);
 		return ResponseEntity.ok(contact);

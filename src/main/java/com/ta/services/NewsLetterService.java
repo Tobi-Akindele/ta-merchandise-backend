@@ -10,4 +10,6 @@ public interface NewsLetterService {
 
 	public List<NewsLetter> getAllNewsLetter();
 
+	public NewsLetter getNewsLetterByEmail(String email);
+
 }

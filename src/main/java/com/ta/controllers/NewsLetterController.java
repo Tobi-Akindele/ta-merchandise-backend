@@ -27,6 +27,10 @@ public class NewsLetterController {
 
 		if (newsLetter == null || Utils.isEmptyString(newsLetter.getEmail()))
 			throw new BadRequestException("400", "Incomplete request data");
+		
+		NewsLetter newsLetterInDb = newsLetterService.getNewsLetterByEmail(newsLetter.getEmail());
+		if(newsLetterInDb != null)
+			return ResponseEntity.ok(newsLetterInDb);
 
 		newsLetter = newsLetterService.createNewsLetter(newsLetter);
 		return ResponseEntity.ok(newsLetter);

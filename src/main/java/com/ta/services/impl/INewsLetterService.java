@@ -27,4 +27,9 @@ public class INewsLetterService implements NewsLetterService {
 		return newsLetterRepository.findAll();
 	}
 
+	@Override
+	public NewsLetter getNewsLetterByEmail(String email) {
+		return newsLetterRepository.findByEmail(email).orElse(null);
+	}
+
 }
