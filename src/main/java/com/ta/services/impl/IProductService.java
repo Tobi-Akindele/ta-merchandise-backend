@@ -28,6 +28,7 @@ public class IProductService implements ProductService {
 	public Product createProduct(Product product) {
 		product.setCreatedAt(new Date());
 		product.setUpdatedAt(new Date());
+		product.setInStock(true);
 		return productRepository.save(product);
 	}
 

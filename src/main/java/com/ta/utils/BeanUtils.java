@@ -24,7 +24,9 @@ public class BeanUtils<T, U> {
 			for (String fieldName : updatableFields) {
 				Field field = target.getClass().getDeclaredField(fieldName);
 				Object providedObject = src.getPropertyValue(field.getName());
-				trg.setPropertyValue(field.getName(), providedObject);
+				if(!Utils.isEmpty(providedObject)) {
+					trg.setPropertyValue(field.getName(), providedObject);
+				}
 			}
 
 			return target;

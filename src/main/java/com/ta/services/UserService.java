@@ -5,6 +5,7 @@ import java.util.List;
 import com.ta.dtos.JwtResponse;
 import com.ta.dtos.LoginRequest;
 import com.ta.dtos.UserDto;
+import com.ta.dtos.Stats;
 import com.ta.models.User;
 
 public interface UserService {
@@ -24,4 +25,6 @@ public interface UserService {
 	public void deleteUser(User user);
 	
 	public List<User> getByLimit(boolean limit);
+
+	public List<Stats> getUserStats();
 }

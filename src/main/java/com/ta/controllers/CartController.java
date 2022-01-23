@@ -45,7 +45,7 @@ public class CartController {
 			throw new BadRequestException("400", "Requestbody is required");
 		
 		cart = cartService.createCart(cart);
-		return ResponseEntity.ok(new Response("Cart created successfully", cart));
+		return ResponseEntity.ok(cart);
 	}
 	
 	@PutMapping("/cart/{cartId}")
@@ -61,7 +61,7 @@ public class CartController {
 			throw new NotFoundException("404", "Cart not found");
 		
 		cart = cartService.updateCart(cartInDb, cart);
-		return ResponseEntity.ok(new Response("Cart updated successfully", cart));
+		return ResponseEntity.ok(cart);
 	}
 	
 	@DeleteMapping("/cart/{cartId}")
@@ -93,7 +93,7 @@ public class CartController {
 		
 		Cart cart = cartService.getByUserId(userId);
 		
-		return ResponseEntity.ok(new Response("User's cart retrieved successfully", cart));
+		return ResponseEntity.ok(cart);
 	}
 	
 	@GetMapping("/carts")
@@ -102,6 +102,6 @@ public class CartController {
 		
 		List<Cart> carts = cartService.getAllCarts();
 		
-		return ResponseEntity.ok(new Response("Carts retrieved successfully", carts));
+		return ResponseEntity.ok(carts);
 	}
 }

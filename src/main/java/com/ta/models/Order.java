@@ -1,15 +1,19 @@
 package com.ta.models;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 @Document(collection = "Orders")
 public class Order {
@@ -23,8 +27,9 @@ public class Order {
 	@NotEmpty
 	private Set<CartProducts> products = new HashSet<>();
 	
-	@NotBlank
-	private BigInteger amount;
+	@NotNull
+	@Field(targetType = FieldType.DECIMAL128)
+	private BigDecimal amount;
 
 	private String address;
 	
@@ -33,6 +38,9 @@ public class Order {
 	private Date createdAt;
 	
 	private Date updatedAt;
+	
+	@Transient
+	private User user;
 
 	public String getId() {
 		return id;
@@ -58,11 +66,11 @@ public class Order {
 		this.products = products;
 	}
 
-	public BigInteger getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigInteger amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
@@ -96,5 +104,13 @@ public class Order {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

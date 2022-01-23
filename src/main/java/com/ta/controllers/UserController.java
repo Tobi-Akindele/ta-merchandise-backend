@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ta.dtos.Response;
 import com.ta.dtos.UserDto;
+import com.ta.dtos.Stats;
 import com.ta.exceptions.BadRequestException;
 import com.ta.exceptions.NotFoundException;
 import com.ta.models.User;
@@ -51,7 +52,7 @@ public class UserController {
 
 		user = userService.updateUser(user, userDto);
 
-		return ResponseEntity.ok(new Response("User updated successfully", user));
+		return ResponseEntity.ok(user);
 	}
 	
 	@DeleteMapping("/user/{userId}")
@@ -81,7 +82,7 @@ public class UserController {
 		if(user == null)
 			throw new NotFoundException("400", "Resource not found");
 		
-		return ResponseEntity.ok(new Response("User retrieved successfully", user));
+		return ResponseEntity.ok(user);
 	}
 	
 	@GetMapping("/users")
@@ -90,6 +91,15 @@ public class UserController {
 		
 		List<User> users = userService.getByLimit(limit);
 		
-		return ResponseEntity.ok(new Response("Users retrieved successfully", users));
+		return ResponseEntity.ok(users);
+	}
+	
+	@GetMapping("/users/stats")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getUserStats() {
+
+		List<Stats> stats = userService.getUserStats();
+		
+		return ResponseEntity.ok(stats);
 	}
 }

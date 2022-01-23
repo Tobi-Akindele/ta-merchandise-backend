@@ -51,4 +51,10 @@ public class ChargeRequest {
 	public void setStripeToken(String stripeToken) {
 		this.stripeToken = stripeToken;
 	}
+
+	@Override
+	public String toString() {
+		return "ChargeRequest [description=" + description + ", amount=" + amount + ", currency=" + currency
+				+ ", stripeEmail=" + stripeEmail + ", stripeToken=" + stripeToken + "]";
+	}
 }
